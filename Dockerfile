@@ -16,7 +16,7 @@ RUN set -ex \
   done
 
 ENV NPM_CONFIG_LOGLEVEL info
-ENV NODE_VERSION 5.2.0
+ENV NODE_VERSION 5.4.1
 
 RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz" \
   && curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt.asc" \
@@ -29,9 +29,9 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 
 # ruby begin
 
-ENV RUBY_MAJOR 2.2
-ENV RUBY_VERSION 2.2.4
-ENV RUBY_DOWNLOAD_SHA256 b6eff568b48e0fda76e5a36333175df049b204e91217aa32a65153cc0cdcb761
+ENV RUBY_MAJOR 2.3
+ENV RUBY_VERSION 2.3.0
+ENV RUBY_DOWNLOAD_SHA256 ba5ba60e5f1aa21b4ef8e9bf35b9ddb57286cb546aac4b5a28c71f459467e507
 ENV RUBYGEMS_VERSION 2.5.1
 
 # skip installing gem documentation

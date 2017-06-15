@@ -149,7 +149,7 @@ RUN mkdir -p /usr/local/etc \
 ENV RUBY_MAJOR 2.4
 ENV RUBY_VERSION 2.4.1
 ENV RUBY_DOWNLOAD_SHA256 4fc8a9992de3e90191de369270ea4b6c1b171b7941743614cc50822ddc1fe654
-ENV RUBYGEMS_VERSION 2.6.11
+ENV RUBYGEMS_VERSION 2.6.12
 
 # some of ruby's build scripts are written in ruby
 #   we purge system ruby later to make sure our final image uses what we just built
@@ -157,6 +157,7 @@ RUN set -ex \
 	\
 	&& buildDeps=' \
 		bison \
+		dpkg-dev \
 		libgdbm-dev \
 		ruby \
 	' \
@@ -183,8 +184,12 @@ RUN set -ex \
 	&& mv file.c.new file.c \
 	\
 	&& autoconf \
-	&& ./configure --disable-install-doc --enable-shared \
-	&& make -j"$(nproc)" \
+	&& gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)" \
+	&& ./configure \
+		--build="$gnuArch" \
+		--disable-install-doc \
+		--enable-shared \
+	&& make -j "$(nproc)" \
 	&& make install \
 	\
 	&& apt-get purge -y --auto-remove $buildDeps \
@@ -193,7 +198,7 @@ RUN set -ex \
 	\
 	&& gem update --system "$RUBYGEMS_VERSION"
 
-ENV BUNDLER_VERSION 1.14.6
+ENV BUNDLER_VERSION 1.15.1
 
 RUN gem install bundler --version "$BUNDLER_VERSION"
 

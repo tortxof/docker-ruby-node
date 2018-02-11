@@ -278,7 +278,9 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 WORKDIR $GOPATH
 
-COPY go-wrapper /usr/local/bin/
+ADD https://raw.githubusercontent.com/docker-library/golang/366fe83ed839938cd04b2d546a06e2aee25a39a2/1.9/stretch/go-wrapper /usr/local/bin
+
+RUN chmod +rx /usr/local/bin/go-wrapper
 
 # golang end
 

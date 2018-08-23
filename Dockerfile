@@ -12,10 +12,11 @@ ENV LANG C.UTF-8
 # extra dependencies (over what buildpack-deps already includes)
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		tk-dev \
+		uuid-dev \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV GPG_KEY 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
-ENV PYTHON_VERSION 3.6.6
+ENV PYTHON_VERSION 3.7.0
 
 RUN set -ex \
 	\
@@ -61,7 +62,7 @@ RUN cd /usr/local/bin \
 	&& ln -s python3-config python-config
 
 # if this is called "PIP_VERSION", pip explodes with "ValueError: invalid truth value '<VERSION>'"
-ENV PYTHON_PIP_VERSION 10.0.1
+ENV PYTHON_PIP_VERSION 18.0
 
 RUN set -ex; \
 	\
@@ -104,7 +105,7 @@ RUN set -ex \
     gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
   done
 
-ENV NODE_VERSION 8.11.3
+ENV NODE_VERSION 8.11.4
 
 RUN ARCH= && dpkgArch="$(dpkg --print-architecture)" \
   && case "${dpkgArch##*-}" in \
@@ -158,7 +159,7 @@ ENV RUBY_MAJOR 2.5
 ENV RUBY_VERSION 2.5.1
 ENV RUBY_DOWNLOAD_SHA256 886ac5eed41e3b5fc699be837b0087a6a5a3d10f464087560d2d21b3e71b754d
 ENV RUBYGEMS_VERSION 2.7.7
-ENV BUNDLER_VERSION 1.16.2
+ENV BUNDLER_VERSION 1.16.4
 
 # some of ruby's build scripts are written in ruby
 #   we purge system ruby later to make sure our final image uses what we just built
